@@ -25,7 +25,6 @@
     "bump:minor": "node scripts/sync-version.js --bump --minor",
     "bump:major": "node scripts/sync-version.js --bump --major",
     "build": "tsc && shx cp setup-claude-server.js dist/ && shx chmod +x dist/*.js",
-    "build:binary": "npm run build && npx nexe dist/index.js -o desktop-commander-binary --target mac-x64-18.15.0",
     "watch": "tsc --watch",
     "start": "node dist/index.js",
     "start:debug": "node --inspect-brk=9229 dist/index.js",
