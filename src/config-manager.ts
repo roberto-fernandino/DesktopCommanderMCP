@@ -1,8 +1,8 @@
-import fs from 'fs/promises';
-import path from 'path';
-import { existsSync } from 'fs';
-import { mkdir } from 'fs/promises';
-import os from 'os';
+import fs from "fs/promises";
+import path from "path";
+import { existsSync } from "fs";
+import { mkdir } from "fs/promises";
+import os from "os";
 
 export interface ServerConfig {
   blockedCommands?: string[];
@@ -23,8 +23,8 @@ class ConfigManager {
     // Get user's home directory
     const homeDir = os.homedir();
     // Define config directory and file paths
-    const configDir = path.join(homeDir, '.claude-server-commander');
-    this.configPath = path.join(configDir, 'config.json');
+    const configDir = path.join(homeDir, ".claude-server-commander");
+    this.configPath = path.join(configDir, "config.json");
   }
 
   /**
@@ -44,7 +44,7 @@ class ConfigManager {
       try {
         await fs.access(this.configPath);
         // Load existing config
-        const configData = await fs.readFile(this.configPath, 'utf8');
+        const configData = await fs.readFile(this.configPath, "utf8");
         this.config = JSON.parse(configData);
       } catch (error) {
         // Config file doesn't exist, create default
@@ -54,7 +54,7 @@ class ConfigManager {
 
       this.initialized = true;
     } catch (error) {
-      console.error('Failed to initialize config:', error);
+      console.error("Failed to initialize config:", error);
       // Fall back to default config in memory
       this.config = this.getDefaultConfig();
       this.initialized = true;
@@ -74,52 +74,51 @@ class ConfigManager {
   private getDefaultConfig(): ServerConfig {
     return {
       blockedCommands: [
-
         // Disk and partition management
-        "mkfs",      // Create a filesystem on a device
-        "format",    // Format a storage device (cross-platform)
-        "mount",     // Mount a filesystem
-        "umount",    // Unmount a filesystem
-        "fdisk",     // Manipulate disk partition tables
-        "dd",        // Convert and copy files, can write directly to disks
-        "parted",    // Disk partition manipulator
-        "diskpart",  // Windows disk partitioning utility
-        
+        "mkfs", // Create a filesystem on a device
+        "format", // Format a storage device (cross-platform)
+        "mount", // Mount a filesystem
+        "umount", // Unmount a filesystem
+        "fdisk", // Manipulate disk partition tables
+        "dd", // Convert and copy files, can write directly to disks
+        "parted", // Disk partition manipulator
+        "diskpart", // Windows disk partitioning utility
+
         // System administration and user management
-        "sudo",      // Execute command as superuser
-        "su",        // Substitute user identity
-        "passwd",    // Change user password
-        "adduser",   // Add a user to the system
-        "useradd",   // Create a new user
-        "usermod",   // Modify user account
-        "groupadd",  // Create a new group
-        "chsh",      // Change login shell
-        "visudo",    // Edit the sudoers file
-        
+        "sudo", // Execute command as superuser
+        "su", // Substitute user identity
+        "passwd", // Change user password
+        "adduser", // Add a user to the system
+        "useradd", // Create a new user
+        "usermod", // Modify user account
+        "groupadd", // Create a new group
+        "chsh", // Change login shell
+        "visudo", // Edit the sudoers file
+
         // System control
-        "shutdown",  // Shutdown the system
-        "reboot",    // Restart the system
-        "halt",      // Stop the system
-        "poweroff",  // Power off the system
-        "init",      // Change system runlevel
-        
+        "shutdown", // Shutdown the system
+        "reboot", // Restart the system
+        "halt", // Stop the system
+        "poweroff", // Power off the system
+        "init", // Change system runlevel
+
         // Network and security
-        "iptables",  // Linux firewall administration
-        "firewall",  // Generic firewall command
-        "netsh",     // Windows network configuration
-        
+        "iptables", // Linux firewall administration
+        "firewall", // Generic firewall command
+        "netsh", // Windows network configuration
+
         // Windows system commands
-        "sfc",       // System File Checker
-        "bcdedit",   // Boot Configuration Data editor
-        "reg",       // Windows registry editor
-        "net",       // Network/user/service management
-        "sc",        // Service Control manager
-        "runas",     // Execute command as another user
-        "cipher",    // Encrypt/decrypt files or wipe data
-        "takeown"    // Take ownership of files
+        "sfc", // System File Checker
+        "bcdedit", // Boot Configuration Data editor
+        "reg", // Windows registry editor
+        "net", // Network/user/service management
+        "sc", // Service Control manager
+        "runas", // Execute command as another user
+        "cipher", // Encrypt/decrypt files or wipe data
+        "takeown", // Take ownership of files
       ],
-      defaultShell: os.platform() === 'win32' ? 'powershell.exe' : 'bash',
-      allowedDirectories: []
+      defaultShell: os.platform() === "win32" ? "powershell.exe" : "bash",
+      allowedDirectories: [],
     };
   }
 
@@ -128,9 +127,13 @@ class ConfigManager {
    */
   private async saveConfig() {
     try {
-      await fs.writeFile(this.configPath, JSON.stringify(this.config, null, 2), 'utf8');
+      await fs.writeFile(
+        this.configPath,
+        JSON.stringify(this.config, null, 2),
+        "utf8"
+      );
     } catch (error) {
-      console.error('Failed to save config:', error);
+      console.error("Failed to save config:", error);
       throw error;
     }
   }
